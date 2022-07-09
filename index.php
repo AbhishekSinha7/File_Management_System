@@ -1,229 +1,256 @@
 <?php
 
-session_start();
-if (isset($_SESSION['user'])) {
-  header('location:home.php');
-}
+require_once 'assets/php/header.php';
+
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<script src="https://kit.fontawesome.com/330c438135.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<style>
+  .navar {
+    overflow: hidden;
+    background-color: #333;
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Responsive Login, Registration & Forgot Form Design</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <style>
-    body {
-      background-color: #efe2ba;
+  .navar a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  .navar .right {
+    float: right;
+  }
+
+  .navar a:hover {
+    background: #ddd;
+    color: black;
+  }
+
+  .main {
+    padding: 16px;
+    margin-top: 4%;
+    height: 100%;
+    margin-left: 200px;
+    padding: 1px 16px;
+    /* Used in this example to enable scrolling */
+  }
+
+  .sidbar {
+    margin: 0;
+    padding: 0;
+    top: 6.5%;
+    width: 200px;
+    background-color: #f1f1f1;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+  }
+
+  .sidbar a {
+    display: block;
+    color: black;
+    padding: 16px;
+    text-decoration: none;
+  }
+
+  .sidbar a:hover {
+    background-color: #4a5a63;
+  }
+
+  /* */
+  * {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    background: #fefefe;
+    font-family: sans-serif;
+  }
+
+  .container1 {
+    width: 70%;
+    margin: 20px auto;
+    margin-left: 30%;
+  }
+
+  .img {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  hr {
+    border-top: 1px dashed rgb(0, 0, 0);
+
+  }
+
+  #filename {
+    margin-left: 5%;
+    font-size: 14px;
+    padding-bottom: 5px;
+    text-align: justify;
+
+  }
+
+  .row {
+    margin-top: 0%;
+    margin-left: 0%;
+    display: flex;
+    flex-direction: row;
+    flex-flow: wrap;
+  }
+
+  .card {
+    margin-top: 4%;
+    border-radius: 4px;
+    width: 15%;
+    background: #fff;
+    border: 1px solid #ccc;
+    transition: 0.3s;
+    margin-left: 5%;
+  }
+
+  .card-header {
+    cursor: pointer;
+    text-align: center;
+    color: rgb(0, 0, 0);
+    margin-left: 0%;
+  }
+
+  .card-body {
+    margin-top: 8px;
+    font-size: 18px;
+  }
+
+  .card-body .btn {
+    display: block;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(to right, #ff416c, #ff4b2b);
+    margin-top: 5px;
+    text-decoration: none;
+    padding: 10px 5px;
+  }
+
+  .card:hover {
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+
+  @media screen and (max-width: 1000px) {
+    .card {
+      width: 40%;
     }
+  }
 
+  @media screen and (max-width: 620px) {
     .container {
-      margin-top: 1in;
-      background-color: #fff;
-      border-radius: 10px;
-      margin-right: 2in;
-      margin-left: 2in;
-      box-shadow: 1px 5px 8px 8px #888888;
-    }
-
-    input[type=text],
-    input[type=email],
-    input[type=password] {
       width: 100%;
-      padding: 12px 20px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
     }
 
-    .button1 {
-      background-color: #333333;
-      color: white;
-      padding: 14px 20px;
-      border: none;
-      margin: 8px 15%;
-      cursor: pointer;
-      border-radius: 10px;
-      width: 70%;
+    .heading {
+      padding: 20px;
+      font-size: 20px;
     }
 
-    .button1:hover {
-      opacity: 0.8;
+    .card {
+      width: 80%;
     }
+  }
 
-    .signup {
-      float: right;
-      background-color: #333333;
-      color: white;
-      border-radius: 10px;
-      padding: 14px 20px;
-      border: none;
-      margin: 8px;
-      cursor: pointer;
-      width: 10%;
-    }
-  </style>
-</head>
 
-<body>
-  <div class="container">
-    <div class="" id="login-box">
-      <div class="">
-        <div class="">
-          <div class="">
-            <button class="signup" id="register-link">Sign Up</button>
-            <h1 class="">Sign in to Account</h1>
+  /*  icons */
 
-            <hr class="" />
-            <form action="#" method="post" class="px-3" id="login-form">
-              <div id="loginAlert"></div>
-              <div class="">
-                <div class="">
-                  <label for="email"><b>Username</b></label>
-                </div>
-                <input type="email" id="email" name="email" class="" placeholder="Enter email" required value="<?php if (isset($_COOKIE['email'])) {
-                                                                                                                  echo $_COOKIE['email'];
-                                                                                                                } ?>">
-              </div>
-              <div class="">
-                <div class="">
-                  <label for="password"><b>Password</b></label>
-                </div>
-                <input type="password" id="password" name="password" class="" minlength="5" placeholder="Enter Password" required autocomplete="off" value="<?php if (isset($_COOKIE['password'])) {
-                                                                                                                                                              echo $_COOKIE['password'];
-                                                                                                                                                            } ?>">
-              </div>
-              <div class="">
-                <div class="">
-                  <input type="checkbox" class="" id="customCheck" name="rem" <?php if (isset($_COOKIE['email'])) { ?> checked <?php } ?>>
-                  <label class="" for="customCheck">Remember me</label>
-                </div>
-              </div>
-              <div class="">
-                <input type="submit" id="login-btn" value="Sign In" class="button1" />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+  .dropbtn {
+    background-color: #d8d8d8;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .dropdown {
+    position: inherit;
+    display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+    min-width: 30px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+  }
+
+  .dropdown-content a {
+    color: black;
+    padding: 10px 10px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .dropdown-content a:hover {
+    background-color: #f1f1f1;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  .dropdown:hover .dropbtn {
+    background-color: #ff5900;
+  }
+</style>
+
+
+<div class="sidbar">
+  <a class="active" href="upload.php"><i style=" color: black; " class="fa fa-plus"></i>Add files</a>
+  <!--<a href="#news"><i style=" color: black; " class="fa fa-align-justify"></i>News</a>
+  <a href="#contact"><i style=" color: black;" class="fa fa-align-justify"></i>Contact</a>
+  <a href="#about"><i style=" color: black;" class="fa fa-align-justify"></i>About</a>-->
+</div>
+
+<div class="container">
+  <div class="main">
+    <div class="row " id="showNote">
     </div>
-
-       <div class="" id="register-box" style="display: none;">
-      <div class="">
-        <div class="">
-          <div class="">
-            <button class="signup" id="login-link">Sign In</button>
-            <h1 style="margin-top: 5%;" class="">Welcome Back!</h1>
-            <p class="">To keep connected with us please login with your personal info.</p>
-          </div>
-          <hr class="" />
-          <div class="">
-            <h1 class="">Create Account</h1>
-            <form action="#" method="post" class="" id="register-form">
-              <div id="regAlert"></div>
-              <div class="">
-                <div class="">
-                  <label for="name"><b>Full Name</b></label>
-                </div>
-                <input type="text" id="name" name="name" class="" placeholder="Enter Full Name" required />
-              </div>
-              <div class="">
-                <div class="">
-                  <label for="email"><b>Email</b></label>
-                </div>
-                <input type="email" id="remail" name="email" class="" placeholder=" Enter email" required />
-              </div>
-              <div class="">
-                <div class="">
-                  <label for="password"><b>Password</b></label>
-                </div>
-                <input type="password" id="rpassword" name="password" class="" minlength="5" placeholder="Enter Password" required />
-              </div>
-              <div class="">
-                <div class="">
-                  <label for="cpassword"><b>Confirm password</b></label>
-                </div>
-                <input type="password" id="cpassword" name="cpassword" class="" minlength="5" placeholder="Enter Password Again" required />
-              </div>
-              <div class="">
-                <div id="passError" class=""></div>
-              </div>
-              <div class="">
-                <input type="submit" id="register-btn" value="Sign Up" class="button1" />
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
+  </div>
+</div>
 
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-    $(function() {
-      $("#register-link").click(function() {
-        $("#login-box").hide();
-        $("#register-box").show();
-      });
-      $("#login-link").click(function() {
-        $("#login-box").show();
-        $("#register-box").hide();
-      });
 
-      $("#register-btn").click(function(e) {
-        if ($("#register-form")[0].checkValidity()) {
-          e.preventDefault();
-          $("#register-btn").val('please wait');
-          if ($("#rpassword").val() != $("#cpassword").val()) {
-            $("#passError").text('*Password did not matched');
-            $("#register-btn").val('Sign up');
-          } else {
-            $("#passError").text('');
-            $.ajax({
-              url: 'assets/php/action.php',
-              method: 'post',
-              data: $("#register-form").serialize() + '&action=register',
-              success: function(response) {
-                $("#register-btn").val('Sign up');
-                if (response === 'register') {
-                  window.location = 'home.php';
-                } else {
-                  $("#regAlert").html(response);
-                }
-              }
-            });
-          }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.24/datatables.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+<script>
+  $(document).ready(function() {
+    displayAllNotes();
+
+    function displayAllNotes() {
+      $.ajax({
+        url: 'assets/php/process.php',
+        method: 'post',
+        data: {
+          action: 'display_notes'
+        },
+        success: function(response) {
+          $("#showNote").html(response);
         }
       });
+    }
 
-      $("#login-btn").click(function(e) {
-        if ($("#login-form")[0].checkValidity()) {
-          e.preventDefault();
-          $("#login-btn").val('please wait');
-          $.ajax({
-            url: 'assets/php/action.php',
-            method: 'post',
-            data: $("#login-form").serialize() + '&action=login',
-            success: function(response) {
-              console.log(response);
-              $("#login-btn").val('Sign in');
-              if (response === 'login') {
-                window.location = 'home.php';
-              } else {
-                $("#loginAlert").html(response);
-              }
-            }
-          });
-        }
-      });
-
-    
-    });
-  </script>
-</body>
+  });
+</script>
 
 </html>
